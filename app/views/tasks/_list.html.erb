@@ -1,0 +1,23 @@
+<table border="1">
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Due date</th>
+    <th>Is done</th>
+    <th colspan="4">Actions</th>
+  </tr>
+
+<% @tasks.each do |task| %>
+  <tr>
+    <td><%=h task.title %></td>
+    <td><%= truncate(task.description,20,'...') unless task.description.blank? %></td>
+    <td><%=h task.due_date %></td>
+    <td><%= task.is_done? ? 'Done' : 'Pending' %></td>
+    <td><%= link_to 'Show', task_list_task_path(@task_list,task) %></td>
+    <td><%= link_to 'Edit', edit_task_list_task_path(@task_list,task) %></td>
+    <td><%= link_to 'Destroy', task_list_task_path(@task_list,task), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= task.is_done? ? link_to_remote("Mark as pending", :url => set_pending_task_path(task,:task_list_id => @task_list)) : link_to_remote("Mark as done", :url => set_done_task_path(task,:task_list_id => @task_list)) %>
+    </td>
+  </tr>
+<% end %>
+</table>

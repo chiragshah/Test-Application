@@ -1,0 +1,27 @@
+<h1>Listing Task Lists</h1>
+<div id="list">
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>User</th>
+    <th colspan="5">Actions</th>
+  </tr>
+
+<% @task_lists.each do |task_list| %>
+  <tr>
+    <td><%=h task_list.name %></td>
+    <td><%= truncate(task_list.description,20,'...') unless task_list.description.blank? %></td>
+    <td><%= task_list.user.user_name %></td>
+    <td><%= link_to 'Show', task_list %></td>
+    <td><%= link_to 'Edit', edit_task_list_path(task_list) %></td>
+    <td><%= link_to 'Destroy', task_list, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Task List', task_list_tasks_path(task_list) %></td>
+    <td><%= link_to 'Add Task', new_task_list_task_path(task_list) %></td>
+  </tr>
+<% end %>
+</table>
+</div>
+<br />
+
+<%= link_to 'New task_list', new_task_list_path %>
